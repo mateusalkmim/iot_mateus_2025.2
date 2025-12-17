@@ -60,7 +60,10 @@ void printSensorData();
 void setup() {
   // Initialize Serial Communication
   Serial.begin(115200);
-  delay(1000);
+  // Wait for serial port to connect (non-blocking alternative to delay)
+  while (!Serial && millis() < 1000) {
+    ; // Wait up to 1 second for serial connection
+  }
   Serial.println("\n\n====================================");
   Serial.println("ESP32 DevKit V1 - Sensor Control System");
   Serial.println("====================================\n");
