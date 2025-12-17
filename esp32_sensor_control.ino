@@ -75,10 +75,8 @@ void setup() {
   
   // Initialize Servo Motor
   // ESP32Servo library allows setting PWM frequency and range
+  // Allocate only one timer for the servo to preserve resources
   ESP32PWM::allocateTimer(0);
-  ESP32PWM::allocateTimer(1);
-  ESP32PWM::allocateTimer(2);
-  ESP32PWM::allocateTimer(3);
   myServo.setPeriodHertz(50);    // Standard 50 Hz servo
   myServo.attach(SERVO_PIN, 500, 2400); // Min and max pulse width in microseconds
   myServo.write(0);              // Start at 0 degrees
@@ -133,8 +131,8 @@ void loop() {
     controlServo();
   }
   
-  // Small delay to prevent overwhelming the CPU
-  delay(10);
+  // No delay needed - system is fully non-blocking
+  // The timed functions control their own execution intervals
 }
 
 // ===== Interrupt Service Routine =====
